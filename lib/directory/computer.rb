@@ -20,8 +20,10 @@ module Directory
           @command_interpreter.run_command(command, @file_system)
         rescue Interpreter::InvalidCommandError => error
           puts "#{Time.now} [COMPUTER] <INTERPRETER ERROR> #{error.message}"
-        rescue RuntimeError => error
+        rescue StandardError => error
           puts "#{Time.now} [COMPUTER] <FATAL ERROR> #{error.message}"
+          puts "#{Time.now} [COMPUTER] <FATAL ERROR> Shutting down right now"
+          raise error
         end
       end
 
