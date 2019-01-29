@@ -1,6 +1,7 @@
 require_relative 'basic_commands/help_command'
 require_relative 'basic_commands/echo_command'
 require_relative 'basic_commands/time_command'
+require_relative 'basic_commands/cat_command'
 require_relative 'basic_commands/current_directory_command'
 require_relative 'basic_commands/change_directory_command'
 require_relative 'basic_commands/list_command'
@@ -18,6 +19,8 @@ module Directory
             BasicCommands::HelpCommand.new(arguments, file_system)
           when 'echo'
             BasicCommands::EchoCommand.new(arguments, file_system)
+          when 'cat'
+            BasicCommands::CatCommand.new(arguments, file_system)
           when 'time'
             BasicCommands::TimeCommand.new(arguments, file_system)
           when 'pwd'
