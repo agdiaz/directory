@@ -28,11 +28,22 @@ module Directory
     end
 
     # Folder type
+    def folder?
+      true
+    end
 
     def add(file)
       file.parent = self
       @content << file
       self
+    end
+
+    def exists?(filename)
+      @content.any? { |file| file.name == filename }
+    end
+
+    def find(filename)
+      @content.find { |file| file.name == filename }
     end
   end
 end

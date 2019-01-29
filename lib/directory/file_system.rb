@@ -1,57 +1,22 @@
 module Directory
   class FileSystem
+    attr_reader :current_folder
     def initialize(mount_folder)
-      @mount_folder = mount_folder
+      @root = mount_folder
+      @current_folder = @root
     end
 
-    def boot
-      puts "#{Time.now} booting from #{@mount_folder.full_path}... "
+    def change_directory(folder_name)
+      return upper_folder if folder_name == '..'
+      return unless @current_folder.exists?(folder_name)
+      selected_folder = @current_folder.find(folder_name)
 
-      while @command != 'unmount'
-        printf "#{Time.now} [FILESYSTEM] #{@mount_folder.name} $ "
-
-        @command = gets.chomp
-        command_interpreter
-      end
-
-      unmount
+      @current_folder = selected_folder if selected_folder.folder?
     end
 
-    def command_interpreter
-      command_name, *arguments = @command.split(' ')
-      case command_name
-      when 'help'
-        help
-      when 'echo'
-        echo(arguments)
-      when 'time'
-        time
-      when 'unmount'
-        # file system will be unmounted soon
-      else
-        puts "Invalid command. Write `help` to get the available command list"
-      end
-    end
-
-    def help
-      puts 'File system HELP'
-      puts 'Available commands:'
-      puts "\t help"
-      puts "\t time"
-      puts "\t echo"
-      puts "\t unmount"
-    end
-
-    def time
-      puts Time.now
-    end
-
-    def echo(text)
-      puts text
-    end
-
-    def unmount
-      puts "#{Time.now} unmounting... "
+    def upper_folder
+      return if @current_folder == @root
+      @current_folder = @current_folder.parent
     end
   end
 end

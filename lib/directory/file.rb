@@ -30,5 +30,10 @@ module Directory
     def list
       "#{full_path} (#{logical_size} Bytes)"
     end
+
+    def folder?
+      false
+    end
+
   end
 end
