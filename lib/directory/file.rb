@@ -10,17 +10,17 @@ module Directory
       @updated_at = Time.now
     end
 
-    def write(new_content)
+    def edit(new_content)
       @content = new_content
       @updated_at = Time.now
     end
 
-    def full_path
-      "#{@parent.full_path}/#{@name}"
-    end
-
     def cat
       puts @content
+    end
+
+    def full_path
+      "#{@parent.full_path}/#{@name}"
     end
 
     def logical_size

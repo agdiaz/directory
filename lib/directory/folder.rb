@@ -1,34 +1,38 @@
 module Directory
-  class Folder
-    attr_reader :name
-    attr_accessor :parent
-
-    def initialize(name)
-      @name = name
-      @parent = nil
-      @content = []
-      @created_at = Time.now
-      @updated_at = Time.now
+  class Folder < File
+    def initialize(name, content = [])
+      super
     end
 
-    def add(item)
-      item.parent = self
-      @content << item
-      self
+    # File Type
+    def cat
+      raise "#{name} is a folder."
+    end
+
+    def edit(_content)
+      raise "#{name} is a folder."
     end
 
     def full_path
-      return @name if parent.nil?
+      return name if parent.nil?
 
-      "#{@parent.full_path}/#{@name}"
+      "#{parent.full_path}/#{name}"
     end
 
     def logical_size
-      @content.inject(0) { |summarized, item| summarized + item.logical_size }
+      content.inject(0) { |summarized, file| summarized + file.logical_size }
     end
 
     def list
-      ["#{full_path} (Folder)", @content.map(&:list)].flatten
+      ["#{full_path} (Folder)", content.map(&:list)].flatten
+    end
+
+    # Folder type
+
+    def add(file)
+      file.parent = self
+      @content << file
+      self
     end
   end
 end

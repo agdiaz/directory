@@ -31,5 +31,17 @@ module Directory
         expect(root.logical_size).to eq(1040)
       end
     end
+
+    describe '#cat' do
+      it 'raises an error' do
+        expect { root.cat }.to raise_error('root is a folder.')
+      end
+    end
+
+    describe '#edit' do
+      it 'raises an error' do
+        expect { root.edit("text") }.to raise_error('root is a folder.')
+      end
+    end
   end
 end
